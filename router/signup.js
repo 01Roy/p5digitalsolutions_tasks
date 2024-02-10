@@ -1,5 +1,5 @@
 const express = require('express');
-const Signupuser = require('../model/signup')
+const User = require('../model/signup')
 const bcrypt = require('bcryptjs')
 const genToken = require('../utils/token')
 
@@ -7,7 +7,7 @@ const router = express.Router()
 
 
 router.get('/', async (req, res) => {
-    const users = await Signupuser.find();
+    const users = await User.find();
     if (!users) {
         res.send('no users exists')
     }
@@ -15,8 +15,8 @@ router.get('/', async (req, res) => {
     res.status(200).send(users)
 })
 
-router.post('/', async (req, res) => {
-    let newUser = await new Signupuser({
+router.post('/signup', async (req, res) => {
+    let newUser = await new User({
         name: req.body.name,
         email: req.body.email,
         password: bcrypt.hashSync(req.body.password, 10),
@@ -36,7 +36,7 @@ router.post('/', async (req, res) => {
 })
 
 router.post('/login', async (req, res) => {
-    const user = await Signupuser.findOne({ email: req.body.email })
+    const user = await User.findOne({ email: req.body.email })
 
 
     if (!user) {
@@ -54,7 +54,7 @@ router.post('/login', async (req, res) => {
 
 
 
-// router.post('/', userCreation)
+
 
 
 

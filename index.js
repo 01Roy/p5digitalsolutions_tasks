@@ -3,8 +3,7 @@ const app = express();
 const mongoose = require('mongoose')
 require('dotenv/config')
 
-const signupRouter = require('./router/signup')
-const loginRouter = require('./router/login')
+const userRouter = require('./router/signup')
 
 const api = process.env.API;
 
@@ -17,8 +16,7 @@ mongoose.connect(process.env.CONNECTIONSTRING, { dbName: 'task1' }).then((respon
 })
 // ROUTERS
 app.use(express.json())
-app.use(`${api}/signup`, signupRouter)
-app.use(`${api}/login`, loginRouter)
+app.use(`${api}/user`, userRouter)
 
 
 
