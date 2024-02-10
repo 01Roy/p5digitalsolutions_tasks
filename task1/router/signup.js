@@ -24,8 +24,6 @@ router.post('/signup', async (req, res) => {
     })
 
     newUser = await newUser.save();
-    // token = genToken(newUser)
-    // console.log(token)
 
     if (!newUser) {
         return res.send("Unable to signup")
@@ -38,18 +36,17 @@ router.post('/signup', async (req, res) => {
 router.post('/login', async (req, res) => {
     const user = await User.findOne({ email: req.body.email })
 
-
     if (!user) {
         return res.send('User is not found')
     }
     if (user && bcrypt.compareSync(req.body.password, user.password)) {
         token = genToken(user.id)
-        res.status(200).send({ user: user.name, token: token })
+        return res.status(200).send({ user: user.name, token: token })
     } else {
         res.status(400).send('password is wrong')
     }
 
-    res.send(user)
+    // res.send(user)
 })
 
 
